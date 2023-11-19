@@ -6,8 +6,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - crud-nuxt2',
-    title: 'crud-nuxt2',
+    titleTemplate: '%s - BANKAI',
+    title: 'CRUD',
     htmlAttrs: {
       lang: 'en',
     },

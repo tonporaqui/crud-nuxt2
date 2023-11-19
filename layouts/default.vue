@@ -81,6 +81,11 @@ export default {
           title: 'Inspire',
           to: '/inspire',
         },
+        {
+          icon: 'mdi-account-settings',
+          title: 'Manage',
+          to:'/manage',
+        }
       ],
       miniVariant: false,
       right: true,
