@@ -84,8 +84,8 @@ export default {
         {
           icon: 'mdi-account-settings',
           title: 'Account Manage',
-          to:'/account-manage',
-        }
+          to: '/account-manage',
+        },
       ],
       miniVariant: false,
       right: true,
