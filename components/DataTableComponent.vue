@@ -1,12 +1,15 @@
 <template>
-  <v-data-table :headers="headers" :items="items" sort-by="calories" class="elevation-1">
+  <v-data-table :headers="headers" :items="items" sort-by="name" class="elevation-1">
+    <template #item.perfil="{ item }">
+      {{ item.perfil.name }}
+    </template>    
     <template #item.actions="{ item }">
       <v-icon small class="mr-2" @click="() => $emit('edit-item', item)"> mdi-pencil </v-icon>
       <v-icon small @click="() => $emit('delete-item', item)"> mdi-delete </v-icon>
     </template>
-    <template #no-data>
+    <!-- <template #no-data>
       <v-btn color="primary" @click="() => $emit('reset')"> Reset </v-btn>
-    </template>
+    </template> -->
   </v-data-table>
 </template>
 
@@ -22,6 +25,7 @@ export default {
       default: () => [] // Valor por defecto como un array vacío
     },
   },
-  emits: ['edit-item', 'delete-item', 'reset'],
+  emits: ['edit-item', 'delete-item'],
+  // emits: ['edit-item', 'delete-item', 'reset'],
 };
 </script>

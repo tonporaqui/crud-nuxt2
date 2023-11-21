@@ -1,10 +1,11 @@
 <template>
   <div>
     <ToolbarComponent @add-item="addItem" />
-    <DataTableComponent :headers="headers" :items="desserts" @edit-item="editItem" @delete-item="deleteItem" @reset="initialize" />
+    <DataTableComponent :headers="headers" :items="users" @edit-item="editItem" @delete-item="deleteItem" />
     <DialogFormComponent
       :is-visible.sync="dialog"
       :edited-item="editedItem"
+      :profiles="profiles"
       @close-dialog="close"
       @save-item="save"
     />
@@ -28,33 +29,37 @@ export default {
     dialogDelete: false,
     headers: [
       {
-        text: 'Nombre)',
+        text: 'Nombre',
         align: 'start',
         sortable: false,
         value: 'name',
       },
-      { text: 'Apellidos', value: 'apellidos',sortable: false },
+      { text: 'Apellido', value: 'lastname',sortable: false },
       { text: 'Perfil', value: 'perfil',sortable: false },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
-    desserts: [],
     editedIndex: -1,
     editedItem: {
       name: '',
-      apellidos: '',
-      perfil: '',
+      lastname: '',
+      perfil: { id: null, name: '' },
     },
     defaultItem: {
       name: '',
-      apellidos: '',
-      perfil: '',
+      lastname: '',
+      perfil: { id: null, name: '' },
     },
+    profiles: [],
   }),
 
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
+    users()
+    {
+      return this.$store.getters['user/allUsers'];
+    },    
   },
 
   watch: {
@@ -66,39 +71,47 @@ export default {
     },
   },
 
-  created() {
-    this.initialize()
+  created()
+  {
+    this.$store.dispatch('user/fetchUsers')
+      .then(response =>
+      {
+        // console.log("Usuarios cargados:", response);
+      })
+      .catch(error =>
+      {
+        console.error("Error al cargar usuarios:", error);
+      });
+
+      this.fetchProfiles();
   },
 
+
   methods: {
-    initialize() {
-      this.desserts = [
-        {
-          name: 'nombre',
-          apellidos: 'nose',
-          perfil: 'bankai',
-        },
-      ]
-    },
     addItem() {
       this.editedItem = Object.assign({}, this.defaultItem);
       this.dialog = true;
     },
 
-    editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+    editItem(item)
+    {
+      this.editedIndex = this.users.indexOf(item);
+      this.editedItem = Object.assign({}, item, {
+        perfil: item.perfil ? { id: item.perfil.id } : { id: null }
+      });
+      this.dialog = true;
     },
 
+
+
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.users.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1)
+      this.$store.dispatch('user/deleteUser', this.editedItem.id);
       this.closeDelete()
     },
 
@@ -118,17 +131,33 @@ export default {
       })
     },
 
-    save(newItem) {
-      if (this.editedIndex > -1) {
+    save(dataToSend)
+    {
+      if (this.editedIndex > -1)
+      {
         // Actualizando un ítem existente
-        this.$set(this.desserts, this.editedIndex, newItem);
-      } else {
+        this.$store.dispatch('user/updateUser', { userId: dataToSend.id, updateData: dataToSend });
+      } else
+      {
         // Añadiendo un nuevo ítem
-        this.desserts.push(newItem);
+        this.$store.dispatch('user/createUser', dataToSend);
       }
       this.close();
     },
 
+
+    fetchProfiles()
+    {
+      this.$store.dispatch('profile/fetchProfiles')
+        .then(() =>
+        {
+          this.profiles = this.$store.getters['profile/allProfiles'];
+        })
+        .catch(error =>
+        {
+          console.error('Error al cargar perfiles:', error);
+        });
+    },
   },
 }
 </script>

@@ -10,20 +10,23 @@
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="localEditedItem.name"
-                label="Dessert name"
+                label="Nombre"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                v-model="localEditedItem.apellidos"
+                v-model="localEditedItem.lastname"
                 label="Apellidos"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="localEditedItem.perfil"
+              <v-select
+                v-model="localEditedItem.perfil.id"
+                :items="profiles"
+                item-value="id"
+                item-text="name"
                 label="Perfil"
-              ></v-text-field>
+              ></v-select>
             </v-col>
           </v-row>
         </v-container>
@@ -45,6 +48,10 @@ export default {
       required: true,
     },
     isVisible: Boolean,
+    profiles: {
+      type: Array,
+      default: () => [] 
+    },
   },
   data() {
     return {
@@ -65,10 +72,21 @@ export default {
     close() {
       this.$emit('update:isVisible', false);
     },
-    save() {
-      this.$emit('save-item', this.localEditedItem);
+    save()
+    {
+      const perfilToSend = this.localEditedItem.perfil && this.localEditedItem.perfil.id
+        ? { id: this.localEditedItem.perfil.id }
+        : null;
+
+      const dataToSend = {
+        ...this.localEditedItem,
+        perfil: perfilToSend
+      };
+
+      this.$emit('save-item', dataToSend);
       this.$emit('update:isVisible', false);
     },
+
   },
 };
 </script>
