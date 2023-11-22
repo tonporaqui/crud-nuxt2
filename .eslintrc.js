@@ -16,8 +16,8 @@ module.exports = {
       'error',
       {
         allowModifiers: true,
-        'no-console': 'off',
       },
     ],
+    'no-console': 'off',
   },
 }

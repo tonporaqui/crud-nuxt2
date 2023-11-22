@@ -59,7 +59,17 @@ fetchUsers({ commit }) {
       .catch(error => {
         console.error('Error al eliminar el usuario', error);
       });
-  }
+  },
+  fetchUserById({ commit }, userId) {
+    return this.$api.getAppUserById(userId)
+      .then(response => {
+        return response.data; // Devuelve los datos del usuario para su uso posterior
+      })
+      .catch(error => {
+        console.error('Error al obtener el usuario por ID', error);
+        throw error; // Propaga el error para manejarlo en el componente
+      });
+  },
 };
 
 export const getters = {

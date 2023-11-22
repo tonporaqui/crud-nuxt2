@@ -1,7 +1,7 @@
 <template>
   <div>
     <ToolbarComponent @add-item="addItem" />
-    <DataTableComponent :headers="headers" :items="users" @edit-item="editItem" @delete-item="deleteItem" />
+    <DataTableComponent :headers="headers" :items="users" @view-item="viewItem" @edit-item="editItem" @delete-item="deleteItem" />
     <DialogFormComponent
       :is-visible.sync="dialog"
       :edited-item="editedItem"
@@ -144,6 +144,10 @@ export default {
         {
           console.error('Error al cargar perfiles:', error);
         });
+    },
+    viewItem(item)
+    {
+      this.$router.push({ path: `/user-detail/${item.id}` });
     },
   },
 }

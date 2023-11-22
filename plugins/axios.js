@@ -17,7 +17,10 @@ export default ({ $axios }, inject) => {
     },
     getAllPerfiles() {
       return $axios.get('/perfils');
-    }, 
+    },
+    getAppUserById(userId) {
+      return $axios.get(`/app-users/${userId}`);
+    }
     // ...otros métodos...
   };
   inject('api', api);
