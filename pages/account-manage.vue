@@ -51,7 +51,6 @@ export default {
     },
     profiles: [],
   }),
-
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
@@ -61,7 +60,6 @@ export default {
       return this.$store.getters['user/allUsers'];
     },    
   },
-
   watch: {
     dialog(val) {
       val || this.close()
@@ -70,29 +68,16 @@ export default {
       val || this.closeDelete()
     },
   },
-
   created()
   {
-    this.$store.dispatch('user/fetchUsers')
-      .then(response =>
-      {
-        // console.log("Usuarios cargados:", response);
-      })
-      .catch(error =>
-      {
-        console.error("Error al cargar usuarios:", error);
-      });
-
+      this.fetchUsers();
       this.fetchProfiles();
   },
-
-
   methods: {
     addItem() {
       this.editedItem = Object.assign({}, this.defaultItem);
       this.dialog = true;
     },
-
     editItem(item)
     {
       this.editedIndex = this.users.indexOf(item);
@@ -101,20 +86,15 @@ export default {
       });
       this.dialog = true;
     },
-
-
-
     deleteItem(item) {
       this.editedIndex = this.users.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
-
     deleteItemConfirm() {
       this.$store.dispatch('user/deleteUser', this.editedItem.id);
       this.closeDelete()
     },
-
     close() {
       this.dialog = false;
       this.$nextTick(() => {
@@ -122,7 +102,6 @@ export default {
         this.editedIndex = -1;
       });
     },
-
     closeDelete() {
       this.dialogDelete = false
       this.$nextTick(() => {
@@ -130,7 +109,6 @@ export default {
         this.editedIndex = -1
       })
     },
-
     save(dataToSend)
     {
       if (this.editedIndex > -1)
@@ -144,8 +122,17 @@ export default {
       }
       this.close();
     },
-
-
+    fetchUsers(){
+      this.$store.dispatch('user/fetchUsers')
+        .then(response =>
+        {
+          // console.log("Usuarios cargados:", response);
+        })
+        .catch(error =>
+        {
+          console.error("Error al cargar usuarios:", error);
+        });
+    },
     fetchProfiles()
     {
       this.$store.dispatch('profile/fetchProfiles')
