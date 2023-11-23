@@ -2,7 +2,7 @@
 <template>
     <div>
         <h1>Reporte</h1>
-        <iframe v-if="reportData" :src="pdfSrc" width="100%" height="600px"></iframe>
+        <embed v-if="reportData" :src="pdfSrc" width="100%" height="600px" />
     </div>
 </template>
 
