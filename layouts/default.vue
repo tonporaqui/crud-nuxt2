@@ -86,6 +86,11 @@ export default {
           title: 'Account Manage',
           to: '/account-manage',
         },
+        {
+          icon: 'mdi-file-document', // o cualquier otro icono que elijas
+          title: 'Reportes',
+          to: '/report',
+        },
       ],
       miniVariant: false,
       right: true,
