@@ -61,8 +61,24 @@ export default ({ $axios }, inject) => {
      *
      * @return {Promise} A Promise that resolves to the report data.
      */
-    getReport() {
-      return $axios.get('/report');
+    getPdfReport() {
+      return $axios.get('/report/pdf');
+    },
+    /**
+     * Retrieves an Excel report from the server.
+     *
+     * @return {Promise} A promise that resolves to the Excel report data.
+     */
+    getExcelReport() {
+      return $axios.get('/report/excel');
+    },
+    /**
+     * Retrieves a word report.
+     *
+     * @return {Promise} A Promise that resolves to the word report.
+     */
+    getWordReport() {
+      return $axios.get('/report/word');
     }
     // ...otros métodos...
   };
