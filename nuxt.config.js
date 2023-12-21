@@ -50,12 +50,15 @@ export default {
     proxy: true
   },
 
-  proxy: {
-    '/api/': { target: 'http://localhost:8081', pathRewrite: {'^/api/': ''} }
-  },
+proxy: {
+  '/api/': { target: 'http://localhost:8081', pathRewrite: {'^/api/': ''} },
+  '/process-dni': { target: 'http://127.0.0.1:5000', pathRewrite: {'^/process-dni': ''} }
+},
+
   
   env: {
     API_BASE_URL: process.env.API_BASE_URL,
+    API_BASE_URL_DNI: process.env.API_BASE_URL_DNI
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
