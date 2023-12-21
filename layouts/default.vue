@@ -87,9 +87,14 @@ export default {
           to: '/account-manage',
         },
         {
-          icon: 'mdi-file-document', // o cualquier otro icono que elijas
+          icon: 'mdi-file-document',
           title: 'Reportes',
           to: '/report',
+        },
+        {
+          icon: 'mdi-file-document',
+          title: 'Dni',
+          to: '/dni',
         },
       ],
       miniVariant: false,

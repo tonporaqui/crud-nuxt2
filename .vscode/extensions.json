@@ -1,5 +1,13 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "aykutsarac.jsoncrack-vscode",
+    "PKief.material-icon-theme",
+    "whizkydee.material-palenight-theme",
+    "quicktype.quicktype",
+    "Vue.vscode-typescript-vue-plugin",
+    "hollowtree.vue-snippets",
+    "Vue.volar"
   ]
 }
